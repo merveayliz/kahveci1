@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Coffee Station | Premium Brews</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght=400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        /* Giriş Animasyonu ve Geçiş Efektleri */
+        .splash-hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            transform: scale(1.05);
+        }
+        .content-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.9s ease-out;
+        }
+        .content-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .theme-transition {
+            transition: background-image 0.6s ease-in-out, background-color 0.6s ease;
+        }
+        /* Mobil banner için kaydırma çubuğunu gizleme */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-none {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-[#FDFBF7] text-[#2C2520] antialiased selection:bg-[#6F4E37] selection:text-white theme-transition">
+
+    <div id="splash-screen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1A110B]">
+        <img src="img/inrtopc.jpg" alt="Coffee Station PC" class="absolute inset-0 w-full h-full object-cover hidden md:block opacity-75">
+        <img src="img/intro.jpg" alt="Coffee Station Mobile" class="absolute inset-0 w-full h-full object-cover block md:hidden opacity-75">
+        
+        <div class="absolute inset-0 bg-black/30"></div>
+        
+        <div class="relative z-10 text-center px-6 py-10 rounded-3xl bg-black/20 border border-white/10 max-w-md w-full mx-auto shadow-2xl backdrop-blur-[2px]">
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-2 font-serif text-transparent bg-clip-text bg-gradient-to-b from-[#F5E6CA] via-[#D4B996] to-[#A98467] drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]">
+                THE COFFEE <br><span class="text-white">STATION</span>
+            </h1>
+            <p class="text-[#D4B996] text-[11px] font-bold tracking-widest uppercase mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">Est. 2026 | Roasted to Perfection</p>
+            
+            <button onclick="enterSite()" class="w-full bg-white/10 hover:bg-white/20 text-white font-extrabold py-3.5 px-6 rounded-2xl transition duration-300 border border-white/20 shadow-lg flex items-center justify-center gap-3 text-sm group tracking-wide">
+                <span>Keşfetmeye Başla</span> 
+                <i class="fa-solid fa-mug-hot text-[#D4B996] transform group-hover:rotate-12 transition duration-300"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="main-site-content" class="content-hidden">
+
+        <!-- DİL SEÇENEĞİ -->
+        <div class="bg-[#1A110B] text-[#D4B996] text-xs py-2 px-4 shadow-inner">
+            <div class="max-w-6xl mx-auto flex justify-end gap-4 font-bold">
+                <button onclick="changeLanguage('tr')" class="hover:text-white transition duration-200 flex items-center gap-1">🇹🇷 TR</button>
+                <span class="text-white/20">|</span>
+                <button onclick="changeLanguage('en')" class="hover:text-white transition duration-200 flex items-center gap-1">🇺🇸 EN</button>
+            </div>
+        </div>
+
+        <!-- ASLA KAYBOLMAYAN NAVIGASYON -->
+        <header class="sticky top-0 z-40 bg-[#2C2520]/95 backdrop-blur-md border-b border-[#4A3B32] shadow-xl">
+            <div class="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
+                <a href="#" class="text-xl md:text-2xl font-black font-serif tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#F5E6CA] to-[#D4B996] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                    THE COFFEE <span class="text-white">STATION</span>
+                </a>
+                
+                <div class="flex gap-2">
+                    <button onclick="document.getElementById('iletisim-bolumu').scrollIntoView({ behavior: 'smooth' })" class="bg-gradient-to-r from-[#8B5E3C] to-[#6F4E37] hover:from-[#A98467] hover:to-[#8B5E3C] text-white text-xs md:text-sm font-black py-2.5 px-4 md:px-6 rounded-xl transition duration-300 flex items-center gap-2 shadow-lg shadow-black/30">
+                        <i class="fa-solid fa-map-location-dot"></i> <span id="nav-btn-text">Maps & İletişim</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ================================================================= -->
+        <!-- SADECE MOBİLDE GÖRÜNEN KAYDIRILABİLİR KAMPANYA BANNERI -->
+        <!-- ================================================================= -->
+        <section class="block md:hidden bg-[#1A110B] py-4 px-2 border-b border-[#4A3B32]">
+            <div class="text-center mb-2">
+                <span class="text-[10px] bg-[#8B5E3C] text-white font-extrabold px-3 py-1 rounded-full uppercase tracking-wider animate-pulse">🔥 Günün Mobil Kampanyaları (Kaydır)</span>
+            </div>
+            <div class="flex gap-3 overflow-x-auto snap-x scrollbar-none px-2 py-1">
+                <!-- Kampanya Foto 1 -->
+                <div class="w-[85vw] flex-shrink-0 snap-center bg-[#2C2520] p-3 rounded-2xl border border-[#4A3B32] shadow-lg">
+                    <img src="img/1.jpg" alt="Kampanya 1" class="w-full h-36 object-cover rounded-xl mb-2">
+                    <h5 class="text-[#F5E6CA] text-xs font-bold font-serif">Meyveli 3'lü İstasyon Kombosu</h5>
+                    <p class="text-stone-400 text-[10px] mt-0.5">Tanesi 200 TL yerine 3 adeti sadece 400 TL!</p>
+                </div>
+                <!-- Kampanya Foto 2 -->
+                <div class="w-[85vw] flex-shrink-0 snap-center bg-[#2C2520] p-3 rounded-2xl border border-[#4A3B32] shadow-lg">
+                    <img src="img/2.jpg" alt="Kampanya 2" class="w-full h-36 object-cover rounded-xl mb-2">
+                    <h5 class="text-[#F5E6CA] text-xs font-bold font-serif">Matcha & Latte Esintisi</h5>
+                    <p class="text-stone-400 text-[10px] mt-0.5">İster sıcak ister soğuk; dilediğin latteyle değiştir.</p>
+                </div>
+                <!-- Kampanya Foto 3 -->
+                <div class="w-[85vw] flex-shrink-0 snap-center bg-[#2C2520] p-3 rounded-2xl border border-[#4A3B32] shadow-lg">
+                    <img src="img/3.jpg" alt="Kampanya 3" class="w-full h-36 object-cover rounded-xl mb-2">
+                    <h5 class="text-[#F5E6CA] text-xs font-bold font-serif">Haftalık Roast İndirimi</h5>
+                    <p class="text-stone-400 text-[10px] mt-0.5">Premium Amerikan çekirdeklerinde paket alımlara özel.</p>
+                </div>
+            </div>
+        </section>
+<!-- HERO / DÜKKAN TANITIMI -->
+<section class="py-12 md:py-24 px-4 text-center bg-gradient-to-b from-[#FAF6F0] to-[#FDFBF7]">
+    <!-- hidden md:block eklenerek bu içeriğin mobilde tamamen gizlenmesi, sadece PC'de (md ve üzeri) görünmesi sağlandı -->
+    <div class="max-w-3xl mx-auto hidden md:block">
+        <span class="inline-block bg-[#EEDCC5] text-[#5C3A21] text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4 shadow-sm">Premium Coffee Lounge</span>
+        <h2 id="hero-title" class="text-4xl md:text-6xl font-black mb-6 font-serif text-[#1A110B] leading-tight">
+            Günün İlk Yudumu, <br>Efsanevi Bir <span class="text-[#8B5E3C]">Amerikan Hikayesi</span>
+        </h2>
+        <p id="hero-desc" class="text-[#5C534C] text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+            Özenle seçilmiş kahve çekirdekleri, taze meyve aromaları ve usta dokunuşlarla harmanlanan imza lezzetlerimizle tanışın.
+        </p>
+    </div>
+</section>
+        <!-- KATEGORİ SEÇENEK BUTONLARI -->
+        <section class="max-w-4xl mx-auto px-4 py-6 md:py-12">
+            <div class="grid grid-cols-2 gap-4 bg-[#2C2520] p-2 rounded-2xl shadow-xl border border-[#4A3B32]">
+                <button onclick="switchCategory('soguk')" id="btn-cat-soguk" class="py-4 rounded-xl text-center font-black font-serif text-sm md:text-xl transition-all duration-300 bg-gradient-to-r from-[#8B5E3C] to-[#6F4E37] text-white shadow-md transform scale-102">
+                    🍹 Soğuk İçecekler
+                </button>
+                <button onclick="switchCategory('sicak')" id="btn-cat-sicak" class="py-4 rounded-xl text-center font-black font-serif text-sm md:text-xl transition-all duration-300 text-[#D4B996] hover:text-white">
+                    ☕ Sıcak Kahveler
+                </button>
+            </div>
+        </section>
+
+        <!-- PREMIUM ÜRÜN KATALOĞU (MOBİLDE YANYANA 2 KART & RE-DESIGN) -->
+        <main class="max-w-6xl mx-auto px-2 md:px-4 py-4">
+            
+            <!-- SOĞUK İÇECEKLER KATEGORİSİ -->
+            <div id="catalog-soguk" class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 justify-center">
+                <!-- Kart 1 -->
+                <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="h-36 md:h-56 bg-stone-100 overflow-hidden relative border-b border-[#FAF6F0]">
+                        <img src="img/1.jpg" alt="Meyveli İçecek" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
+                        <span class="absolute bottom-2 left-2 md:bottom-3 md:left-3 bg-[#1A110B]/80 backdrop-blur-sm text-[#F5E6CA] text-[8px] md:text-[10px] font-bold px-2 py-0.5 md:px-3 md:py-1 rounded-full">3 Farklı Aromalı</span>
+                    </div>
+                    <div class="p-3 md:p-6 flex flex-col flex-grow bg-gradient-to-b from-white to-[#FAF6F0]">
+                        <h4 class="font-bold text-[#1A110B] text-sm md:text-lg mb-1 md:drop-shadow-none font-serif tracking-tight">Triple Berry Blast</h4>
+                        <p class="text-[#5C534C] text-[10px] md:text-sm mb-3 leading-relaxed line-clamp-2 md:line-clamp-none">Her fotoğrafta 3 adet enfes meyve aromalı içecek yer alır.</p>
+                        <div class="mb-3 mt-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
+                            <span class="text-stone-500 text-[9px] md:text-xs font-semibold">Tek: <b class="text-stone-700">200 TL</b></span>
+                            <span class="text-[#8B5E3C] font-black text-xs md:text-xl">3 Al 400 TL</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                            <a href="https://wa.me/905551234567?text=Triple Berry Blast siparişi" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-2 px-2 rounded-lg text-center text-[9px] md:text-xs flex items-center justify-center gap-1 shadow-sm"><i class="fa-brands fa-whatsapp"></i> Sipariş</a>
+                            <a href="https://www.yemeksepeti.com" target="_blank" class="bg-[#A21B24] hover:bg-[#b8232c] text-white font-extrabold py-2 px-2 rounded-lg text-center text-[9px] md:text-xs flex items-center justify-center gap-1 shadow-sm"><i class="fa-solid fa-motorcycle"></i> Yemeksepeti</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 2 -->
+                <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="h-36 md:h-56 bg-stone-100 overflow-hidden relative border-b border-[#FAF6F0]">
+                        <img src="img/2.jpg" alt="Tropikal Limonata" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
+                        <span class="absolute bottom-2 left-2 md:bottom-3 md:left-3 bg-[#1A110B]/80 backdrop-blur-sm text-[#F5E6CA] text-[8px] md:text-[10px] font-bold px-2 py-0.5 md:px-3 md:py-1 rounded-full">3 Farklı Aromalı</span>
+                    </div>
+                    <div class="p-3 md:p-6 flex flex-col flex-grow bg-gradient-to-b from-white to-[#FAF6F0]">
+                        <h4 class="font-bold text-[#1A110B] text-sm md:text-lg mb-1 font-serif tracking-tight">Tropical Sunset</h4>
+                        <p class="text-[#5C534C] text-[10px] md:text-sm mb-3 leading-relaxed line-clamp-2 md:line-clamp-none">Özel nane yaprakları ve 3'lü kombinasyon avantajı.</p>
+                        <div class="mb-3 mt-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
+                            <span class="text-stone-500 text-[9px] md:text-xs font-semibold">Tek: <b class="text-stone-700">200 TL</b></span>
+                            <span class="text-[#8B5E3C] font-black text-xs md:text-xl">3 Al 400 TL</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                            <a href="https://wa.me/905551234567?text=Tropical Sunset" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-2 px-2 rounded-lg text-center text-[9px] md:text-xs flex items-center justify-center gap-1 shadow-sm"><i class="fa-brands fa-whatsapp"></i> Sipariş</a>
+                            <a href="https://www.yemeksepeti.com" target="_blank" class="bg-[#A21B24] hover:bg-[#b8232c] text-white font-extrabold py-2 px-2 rounded-lg text-center text-[9px] md:text-xs flex items-center justify-center gap-1 shadow-sm"><i class="fa-solid fa-motorcycle"></i> Yemeksepeti</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 3 -->
+                <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="h-36 md:h-56 bg-stone-100 overflow-hidden relative border-b border-[#FAF6F0]">
+                        <img src="img/3.jpg" alt="Meyveli Limonata" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
+                        <span class="absolute bottom-2 left-2 md:bottom-3 md:left-3 bg-[#1A110B]/80 backdrop-blur-sm text-[#F5E6CA] text-[8px] md:text-[10px] font-bold px-2 py-0.5 md:px-3 md:py-1 rounded-full">3 Farklı Aromalı</span>
+                    </div>
+                    <div class="p-3 md:p-6 flex flex-col flex-grow bg-gradient-to-b from-white to-[#FAF6F0]">
+                        <h4 class="font-bold text-[#1A110B] text-sm md:text-lg mb-1 font-serif tracking-tight">Citrus Fusion</h4>
+                        <p class="text-[#5C534C] text-[10px] md:text-sm mb-3 leading-relaxed line-clamp-2 md:line-clamp-none">Misket limonu ve egzotik narenciye özleri burada.</p>
+                        <div class="mb-3 mt-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
+                            <span class="text-stone-500 text-[9px] md:text-xs font-semibold">Tek: <b class="text-stone-700">200 TL</b></span>
+                            <span class="text-[#8B5E3C] font-black text-xs md:text-xl">3 Al 400 TL</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                            <a href="https://wa.me/905551234567?text=Citrus Fusion" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-2 px-2 rounded-lg text-center text-[9px] md:text-xs flex items-center justify-center gap-1 shadow-sm"><i class="fa-brands fa-whatsapp"></i> Sipariş</a>
+                            <a href="https://www.yemeksepeti.com" target="_blank" class="bg-[#A21B24] hover:bg-[#b8232c] text-white font-extrabold py-2 px-2 rounded-lg text-center text-[9px] md:text-xs flex items-center justify-center gap-1 shadow-sm"><i class="fa-solid fa-motorcycle"></i> Yemeksepeti</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SICAK KAHVELER KATEGORİSİ -->
+            <div id="catalog-sicak" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 hidden">
+                <!-- Kart 1: Premium Matcha -->
+                <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
+                        <img src="img/4.jpg" alt="Matcha" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
+                    </div>
+                    <div class="p-3 md:p-4 flex flex-col flex-grow bg-gradient-to-b from-white to-[#FAF6F0]">
+                        <h4 class="font-bold text-[#1A110B] text-sm md:text-base mb-1 font-serif">Premium Matcha</h4>
+                        <p class="text-[#5C534C] text-[10px] md:text-[11px] mb-3 line-clamp-2">Saf seremoniyel yeşil çay özleri ve süt dokusu.</p>
+                        <div class="mb-3 mt-auto"><span class="text-[#8B5E3C] font-black text-sm md:text-lg">150 TL</span></div>
+                        <div class="grid grid-cols-1 gap-1.5">
+                            <a href="https://wa.me/905551234567?text=Premium Matcha" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp"></i> Sipariş</a>
+                            <a href="https://www.yemeksepeti.com" target="_blank" class="bg-[#A21B24] hover:bg-[#b8232c] text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-solid fa-motorcycle"></i> Yemeksepeti</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 2: Classic Mocha -->
+                <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
+                        <img src="img/5.jpg" alt="Mocha" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
+                    </div>
+                    <div class="p-3 md:p-4 flex flex-col flex-grow bg-gradient-to-b from-white to-[#FAF6F0]">
+                        <h4 class="font-bold text-[#1A110B] text-sm md:text-base mb-1 font-serif">Classic Mocha</h4>
+                        <p class="text-[#5C534C] text-[10px] md:text-[11px] mb-3 line-clamp-2">Espresso şotu ve yoğun Belçika çikolatası.</p>
+                        <div class="mb-3 mt-auto"><span class="text-[#8B5E3C] font-black text-sm md:text-lg">165 TL</span></div>
+                        <div class="grid grid-cols-1 gap-1.5">
+                            <a href="https://wa.me/905551234567?text=Classic Mocha" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp"></i> Sipariş</a>
+                            <a href="https://www.yemeksepeti.com" target="_blank" class="bg-[#A21B24] hover:bg-[#b8232c] text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-solid fa-motorcycle"></i> Yemeksepeti</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 3: Iced Mocha Blast -->
+                <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
+                        <img src="img/6.jpg" alt="Iced Mocha" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
+                    </div>
+                    <div class="p-3 md:p-4 flex flex-col flex-grow bg-gradient-to-b from-white to-[#FAF6F0]">
+                        <h4 class="font-bold text-[#1A110B] text-sm md:text-base mb-1 font-serif">Iced Mocha</h4>
+                        <p class="text-[#5C534C] text-[10px] md:text-[11px] mb-3 line-clamp-2">Buzlu espresso şotu ve enfes çikolata akorları.</p>
+                        <div class="mb-3 mt-auto"><span class="text-[#8B5E3C] font-black text-sm md:text-lg">170 TL</span></div>
+                        <div class="grid grid-cols-1 gap-1.5">
+                            <a href="https://wa.me/905551234567?text=Iced Mocha" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp"></i> Sipariş</a>
+                            <a href="https://www.yemeksepeti.com" target="_blank" class="bg-[#A21B24] hover:bg-[#b8232c] text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-solid fa-motorcycle"></i> Yemeksepeti</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 4: Signature Iced Latte -->
+                <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
+                        <img src="img/7.jpg" alt="Iced Latte" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
+                    </div>
+                    <div class="p-3 md:p-4 flex flex-col flex-grow bg-gradient-to-b from-white to-[#FAF6F0]">
+                        <h4 class="font-bold text-[#1A110B] text-sm md:text-base mb-1 font-serif">Signature Latte</h4>
+                        <p class="text-[#5C534C] text-[10px] md:text-[11px] mb-3 line-clamp-2">Klasik pürüzsüz espresso ve sütün uyumu.</p>
+                        <div class="mb-3 mt-auto"><span class="text-[#8B5E3C] font-black text-sm md:text-lg">160 TL</span></div>
+                        <div class="grid grid-cols-1 gap-1.5">
+                            <a href="https://wa.me/905551234567?text=Signature Latte" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp"></i> Sipariş</a>
+                            <a href="https://www.yemeksepeti.com" target="_blank" class="bg-[#A21B24] hover:bg-[#b8232c] text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-solid fa-motorcycle"></i> Yemeksepeti</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 5: Iced Caramel Latte -->
+                <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
+                        <img src="img/8.jpg" alt="Iced Caramel Latte" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
+                    </div>
+                    <div class="p-3 md:p-4 flex flex-col flex-grow bg-gradient-to-b from-white to-[#FAF6F0]">
+                        <h4 class="font-bold text-[#1A110B] text-sm md:text-base mb-1 font-serif">Caramel Latte</h4>
+                        <p class="text-[#5C534C] text-[10px] md:text-[11px] mb-3 line-clamp-2">Yoğun karamel sosu ve ipeksi süt kremi.</p>
+                        <div class="mb-3 mt-auto"><span class="text-[#8B5E3C] font-black text-sm md:text-lg">175 TL</span></div>
+                        <div class="grid grid-cols-1 gap-1.5">
+                            <a href="https://wa.me/905551234567?text=Caramel Latte" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp"></i> Sipariş</a>
+                            <a href="https://www.yemeksepeti.com" target="_blank" class="bg-[#A21B24] hover:bg-[#b8232c] text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-solid fa-motorcycle"></i> Yemeksepeti</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 6: Extra Latte 1 -->
+                <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
+                        <img src="img/11.jpg" alt="Iced Latte" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
+                    </div>
+                    <div class="p-3 md:p-4 flex flex-col flex-grow bg-gradient-to-b from-white to-[#FAF6F0]">
+                        <h4 class="font-bold text-[#1A110B] text-sm md:text-base mb-1 font-serif">Lathe Blend</h4>
+                        <p class="text-[#5C534C] text-[10px] md:text-[11px] mb-3 line-clamp-2">Klasik pürüzsüz espresso lezzeti.</p>
+                        <div class="mb-3 mt-auto"><span class="text-[#8B5E3C] font-black text-sm md:text-lg">160 TL</span></div>
+                        <div class="grid grid-cols-1 gap-1.5">
+                            <a href="https://wa.me/905551234567?text=Lathe Blend" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp"></i> Sipariş</a>
+                            <a href="https://www.yemeksepeti.com" target="_blank" class="bg-[#A21B24] hover:bg-[#b8232c] text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-solid fa-motorcycle"></i> Yemeksepeti</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 7: Extra Latte 2 -->
+                <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                    <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
+                        <img src="img/12.jpg" alt="Iced Latte" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
+                    </div>
+                    <div class="p-3 md:p-4 flex flex-col flex-grow bg-gradient-to-b from-white to-[#FAF6F0]">
+                        <h4 class="font-bold text-[#1A110B] text-sm md:text-base mb-1 font-serif">House Latte</h4>
+                        <p class="text-[#5C534C] text-[10px] md:text-[11px] mb-3 line-clamp-2">Buzlu sütün kusursuz özel kavrum oranı.</p>
+                        <div class="mb-3 mt-auto"><span class="text-[#8B5E3C] font-black text-sm md:text-lg">160 TL</span></div>
+                        <div class="grid grid-cols-1 gap-1.5">
+                            <a href="https://wa.me/905551234567?text=House Latte" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-brands fa-whatsapp"></i> Sipariş</a>
+                            <a href="https://www.yemeksepeti.com" target="_blank" class="bg-[#A21B24] hover:bg-[#b8232c] text-white font-bold py-2 px-2 rounded-lg text-center text-[9px] md:text-[11px] flex items-center justify-center gap-1"><i class="fa-solid fa-motorcycle"></i> Yemeksepeti</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- İLETİŞİM BİLGİLERİ & HARİTA -->
+        <section id="iletisim-bolumu" class="bg-[#2C2520] text-white py-16 px-4 border-t border-[#4A3B32]">
+            <div class="max-w-6xl mx-auto">
+                <h3 id="contact-title" class="text-3xl font-black font-serif text-center mb-10 text-[#F5E6CA]">Bizimle İletişime Geçin</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                    <div class="space-y-4 lg:col-span-1">
+                        <div class="p-5 bg-[#1A110B] rounded-2xl border border-white/10 flex items-center gap-4">
+                            <div class="w-12 h-12 bg-[#8B5E3C] text-white flex items-center justify-center text-xl rounded-xl flex-shrink-0"><i class="fa-solid fa-location-dot"></i></div>
+                            <div><h5 class="font-bold text-[#F5E6CA] text-sm">Adresimiz</h5><p class="text-[#D4B996] text-xs mt-0.5">Anıt Caddesi, Tandoğan, Çankaya / Ankara</p></div>
+                        </div>
+                        <div class="p-5 bg-[#1A110B] rounded-2xl border border-white/10 flex items-center gap-4">
+                            <div class="w-12 h-12 bg-emerald-600 text-white flex items-center justify-center text-xl rounded-xl flex-shrink-0"><i class="fa-solid fa-phone"></i></div>
+                            <div><h5 class="font-bold text-[#F5E6CA] text-sm">WhatsApp Sipariş</h5><p class="text-[#D4B996] text-xs mt-0.5">+90 (555) 123 45 67</p></div>
+                        </div>
+                        <div class="p-5 bg-[#1A110B] rounded-2xl border border-white/10 flex items-center gap-4">
+                            <div class="w-12 h-12 bg-amber-600 text-white flex items-center justify-center text-xl rounded-xl flex-shrink-0"><i class="fa-solid fa-clock"></i></div>
+                            <div><h5 class="font-bold text-[#F5E6CA] text-sm">Çalışma Saatleri</h5><p class="text-[#D4B996] text-xs mt-0.5">Her Gün: 08:30 - 23:30</p></div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:col-span-2 w-full h-64 md:h-80 rounded-3xl overflow-hidden shadow-md border-4 border-white bg-stone-200">
+                        <iframe class="w-full h-full border-0" 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3059.6610738018684!2d32.83403327655845!3d39.92651438598971!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d34f190a9cd1af%3A0x1556b2d07d1f6952!2sAn%C4%B1tkabir!5e0!3m2!1str!2str!4v1717160000000!5m2!1str!2str" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-stone-900 text-stone-400 border-t border-t-stone-800/80 py-12 px-4 text-center">
+            <div class="max-w-6xl mx-auto flex flex-col items-center justify-center gap-4">
+                <p id="footer-text" class="text-sm text-stone-500 font-medium">© 2026 The Coffee Station. Tüm Hakları Saklıdır.</p>
+                <p class="text-xs text-stone-400 tracking-wider font-semibold bg-stone-800/40 px-5 py-2.5 rounded-full border border-stone-800/60 shadow-inner">
+                    Designed & Coded by <a href="https://www.linkedin.com/in/ayliz-azakl%C4%B1-74579b318/" target="_blank" class="text-orange-500 hover:text-red-500 transition duration-300 font-bold underline decoration-orange-500/30 hover:decoration-red-500/50">Ayliz Dev</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function enterSite() {
+            const splash = document.getElementById('splash-screen');
+            const mainContent = document.getElementById('main-site-content');
+            splash.classList.add('splash-hidden');
+            mainContent.classList.remove('content-hidden');
+            mainContent.classList.add('content-visible');
+            setTimeout(() => { splash.style.display = 'none'; }, 800);
+        }
+
+        function switchCategory(category) {
+            const sogukCatalog = document.getElementById('catalog-soguk');
+            const sicakCatalog = document.getElementById('catalog-sicak');
+            const btnSoguk = document.getElementById('btn-cat-soguk');
+            const btnSicak = document.getElementById('btn-cat-sicak');
+            
+            if (category === 'soguk') {
+                sogukCatalog.style.display = 'grid';
+                sicakCatalog.style.display = 'none';
+                btnSoguk.className = "py-4 rounded-xl text-center font-black font-serif text-sm md:text-xl transition-all duration-300 bg-gradient-to-r from-[#8B5E3C] to-[#6F4E37] text-white shadow-md transform scale-102";
+                btnSicak.className = "py-4 rounded-xl text-center font-black font-serif text-sm md:text-xl transition-all duration-300 text-[#D4B996] hover:text-white";
+                document.body.style.backgroundColor = "#FDFBF7";
+            } else if (category === 'sicak') {
+                sicakCatalog.style.display = 'grid';
+                sogukCatalog.style.display = 'none';
+                btnSicak.className = "py-4 rounded-xl text-center font-black font-serif text-sm md:text-xl transition-all duration-300 bg-gradient-to-r from-[#8B5E3C] to-[#6F4E37] text-white shadow-md transform scale-102";
+                btnSoguk.className = "py-4 rounded-xl text-center font-black font-serif text-sm md:text-xl transition-all duration-300 text-[#D4B996] hover:text-white";
+                document.body.style.backgroundColor = "#F5E6CA";
+            }
+        }
+
+        function changeLanguage(lang) {
+            const navBtn = document.getElementById('nav-btn-text');
+            const heroTitle = document.getElementById('hero-title');
+            const heroDesc = document.getElementById('hero-desc');
+            const contactTitle = document.getElementById('contact-title');
+
+            if (lang === 'tr') {
+                navBtn.innerText = "Maps & İletişim";
+                heroTitle.innerHTML = "Günün İlk Yudumu, <br>Efsanevi Bir <span class='text-[#8B5E3C]'>Amerikan Hikayesi</span>";
+                heroDesc.innerText = "Özenle seçilmiş kahve çekirdekleri, taze meyve aromaları ve usta dokunuşlarla harmanlanan imza lezzetlerimizle tanışın.";
+                contactTitle.innerText = "Bizimle İletişime Geçin";
+            } else if (lang === 'en') {
+                navBtn.innerText = "Maps & Contact";
+                heroTitle.innerHTML = "First Sip of the Day, <br>A Legendary <span class='text-[#8B5E3C]'>American Story</span>";
+                heroDesc.innerText = "Meet our signature flavors blended with carefully selected coffee beans, fresh fruit aromas, and master touches.";
+                contactTitle.innerText = "Get in Touch With Us";
+            }
+        }
+    </script>
+</body>
+</html>
