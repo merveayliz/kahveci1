@@ -10,9 +10,9 @@
     
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
         .font-serif { font-family: 'Playfair Display', serif; }
         
-        /* Giriş Animasyonu ve Geçiş Efektleri */
         .splash-hidden {
             opacity: 0;
             pointer-events: none;
@@ -28,13 +28,11 @@
             opacity: 1;
             transform: translateY(0);
         }
-        .theme-transition {
-            transition: background-image 0.6s ease-in-out, background-color 0.6s ease;
-        }
-        /* Mobil banner için kaydırma çubuğunu gizleme */
-        .scrollbar-none::-webkit-scrollbar {
-            display: none;
-        }
+        
+        .theme-transition {  transition: background-image 0.6s ease-in-out, background-color 0.6s ease;}
+
+        .scrollbar-none::-webkit-scrollbar {  display: none; }
+        
         .scrollbar-none {
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -64,7 +62,6 @@
 
     <div id="main-site-content" class="content-hidden">
 
-        <!-- DİL SEÇENEĞİ -->
         <div class="bg-[#1A110B] text-[#D4B996] text-xs py-2 px-4 shadow-inner">
             <div class="max-w-6xl mx-auto flex justify-end gap-4 font-bold">
                 <button onclick="changeLanguage('tr')" class="hover:text-white transition duration-200 flex items-center gap-1">🇹🇷 TR</button>
@@ -73,7 +70,6 @@
             </div>
         </div>
 
-        <!-- ASLA KAYBOLMAYAN NAVIGASYON -->
         <header class="sticky top-0 z-40 bg-[#2C2520]/95 backdrop-blur-md border-b border-[#4A3B32] shadow-xl">
             <div class="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
                 <a href="#" class="text-xl md:text-2xl font-black font-serif tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#F5E6CA] to-[#D4B996] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
@@ -88,27 +84,24 @@
             </div>
         </header>
 
-        <!-- ================================================================= -->
-        <!-- SADECE MOBİLDE GÖRÜNEN KAYDIRILABİLİR KAMPANYA BANNERI -->
-        <!-- ================================================================= -->
         <section class="block md:hidden bg-[#1A110B] py-4 px-2 border-b border-[#4A3B32]">
             <div class="text-center mb-2">
                 <span class="text-[10px] bg-[#8B5E3C] text-white font-extrabold px-3 py-1 rounded-full uppercase tracking-wider animate-pulse">🔥 Günün Mobil Kampanyaları (Kaydır)</span>
             </div>
             <div class="flex gap-3 overflow-x-auto snap-x scrollbar-none px-2 py-1">
-                <!-- Kampanya Foto 1 -->
+       
                 <div class="w-[85vw] flex-shrink-0 snap-center bg-[#2C2520] p-3 rounded-2xl border border-[#4A3B32] shadow-lg">
                     <img src="img/1.jpg" alt="Kampanya 1" class="w-full h-36 object-cover rounded-xl mb-2">
                     <h5 class="text-[#F5E6CA] text-xs font-bold font-serif">Meyveli 3'lü İstasyon Kombosu</h5>
                     <p class="text-stone-400 text-[10px] mt-0.5">Tanesi 200 TL yerine 3 adeti sadece 400 TL!</p>
                 </div>
-                <!-- Kampanya Foto 2 -->
+             
                 <div class="w-[85vw] flex-shrink-0 snap-center bg-[#2C2520] p-3 rounded-2xl border border-[#4A3B32] shadow-lg">
                     <img src="img/2.jpg" alt="Kampanya 2" class="w-full h-36 object-cover rounded-xl mb-2">
                     <h5 class="text-[#F5E6CA] text-xs font-bold font-serif">Matcha & Latte Esintisi</h5>
                     <p class="text-stone-400 text-[10px] mt-0.5">İster sıcak ister soğuk; dilediğin latteyle değiştir.</p>
                 </div>
-                <!-- Kampanya Foto 3 -->
+             
                 <div class="w-[85vw] flex-shrink-0 snap-center bg-[#2C2520] p-3 rounded-2xl border border-[#4A3B32] shadow-lg">
                     <img src="img/3.jpg" alt="Kampanya 3" class="w-full h-36 object-cover rounded-xl mb-2">
                     <h5 class="text-[#F5E6CA] text-xs font-bold font-serif">Haftalık Roast İndirimi</h5>
@@ -116,9 +109,9 @@
                 </div>
             </div>
         </section>
-<!-- HERO / DÜKKAN TANITIMI -->
+        
 <section class="py-12 md:py-24 px-4 text-center bg-gradient-to-b from-[#FAF6F0] to-[#FDFBF7]">
-    <!-- hidden md:block eklenerek bu içeriğin mobilde tamamen gizlenmesi, sadece PC'de (md ve üzeri) görünmesi sağlandı -->
+    
     <div class="max-w-3xl mx-auto hidden md:block">
         <span class="inline-block bg-[#EEDCC5] text-[#5C3A21] text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4 shadow-sm">Premium Coffee Lounge</span>
         <h2 id="hero-title" class="text-4xl md:text-6xl font-black mb-6 font-serif text-[#1A110B] leading-tight">
@@ -129,7 +122,6 @@
         </p>
     </div>
 </section>
-        <!-- KATEGORİ SEÇENEK BUTONLARI -->
         <section class="max-w-4xl mx-auto px-4 py-6 md:py-12">
             <div class="grid grid-cols-2 gap-4 bg-[#2C2520] p-2 rounded-2xl shadow-xl border border-[#4A3B32]">
                 <button onclick="switchCategory('soguk')" id="btn-cat-soguk" class="py-4 rounded-xl text-center font-black font-serif text-sm md:text-xl transition-all duration-300 bg-gradient-to-r from-[#8B5E3C] to-[#6F4E37] text-white shadow-md transform scale-102">
@@ -141,12 +133,10 @@
             </div>
         </section>
 
-        <!-- PREMIUM ÜRÜN KATALOĞU (MOBİLDE YANYANA 2 KART & RE-DESIGN) -->
         <main class="max-w-6xl mx-auto px-2 md:px-4 py-4">
             
-            <!-- SOĞUK İÇECEKLER KATEGORİSİ -->
             <div id="catalog-soguk" class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 justify-center">
-                <!-- Kart 1 -->
+               
                 <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
                     <div class="h-36 md:h-56 bg-stone-100 overflow-hidden relative border-b border-[#FAF6F0]">
                         <img src="img/1.jpg" alt="Meyveli İçecek" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
@@ -166,7 +156,6 @@
                     </div>
                 </div>
 
-                <!-- Kart 2 -->
                 <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
                     <div class="h-36 md:h-56 bg-stone-100 overflow-hidden relative border-b border-[#FAF6F0]">
                         <img src="img/2.jpg" alt="Tropikal Limonata" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
@@ -186,7 +175,6 @@
                     </div>
                 </div>
 
-                <!-- Kart 3 -->
                 <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
                     <div class="h-36 md:h-56 bg-stone-100 overflow-hidden relative border-b border-[#FAF6F0]">
                         <img src="img/3.jpg" alt="Meyveli Limonata" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
@@ -207,9 +195,8 @@
                 </div>
             </div>
 
-            <!-- SICAK KAHVELER KATEGORİSİ -->
             <div id="catalog-sicak" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 hidden">
-                <!-- Kart 1: Premium Matcha -->
+              
                 <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
                     <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
                         <img src="img/4.jpg" alt="Matcha" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
@@ -225,7 +212,6 @@
                     </div>
                 </div>
 
-                <!-- Kart 2: Classic Mocha -->
                 <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
                     <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
                         <img src="img/5.jpg" alt="Mocha" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
@@ -241,7 +227,6 @@
                     </div>
                 </div>
 
-                <!-- Kart 3: Iced Mocha Blast -->
                 <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
                     <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
                         <img src="img/6.jpg" alt="Iced Mocha" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
@@ -257,7 +242,6 @@
                     </div>
                 </div>
 
-                <!-- Kart 4: Signature Iced Latte -->
                 <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
                     <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
                         <img src="img/7.jpg" alt="Iced Latte" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
@@ -273,7 +257,6 @@
                     </div>
                 </div>
 
-                <!-- Kart 5: Iced Caramel Latte -->
                 <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
                     <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
                         <img src="img/8.jpg" alt="Iced Caramel Latte" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
@@ -289,7 +272,6 @@
                     </div>
                 </div>
 
-                <!-- Kart 6: Extra Latte 1 -->
                 <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
                     <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
                         <img src="img/11.jpg" alt="Iced Latte" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
@@ -305,7 +287,6 @@
                     </div>
                 </div>
 
-                <!-- Kart 7: Extra Latte 2 -->
                 <div class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-[#EEDCC5] shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
                     <div class="h-32 md:h-44 bg-stone-100 overflow-hidden border-b border-[#FAF6F0]">
                         <img src="img/12.jpg" alt="Iced Latte" class="w-full h-full object-cover group-hover:scale-103 transition duration-500">
@@ -324,7 +305,6 @@
 
         </main>
 
-        <!-- İLETİŞİM BİLGİLERİ & HARİTA -->
         <section id="iletisim-bolumu" class="bg-[#2C2520] text-white py-16 px-4 border-t border-[#4A3B32]">
             <div class="max-w-6xl mx-auto">
                 <h3 id="contact-title" class="text-3xl font-black font-serif text-center mb-10 text-[#F5E6CA]">Bizimle İletişime Geçin</h3>
